@@ -1,0 +1,343 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.proto-wrap { display: flex; height: 720px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; background: var(--color-background-tertiary); }
+.left-panel { width: 280px; min-width: 280px; background: var(--color-background-primary); border-right: 0.5px solid var(--color-border-tertiary); display: flex; flex-direction: column; overflow: hidden; }
+.left-header { padding: 14px 16px 10px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.car-info { display: flex; align-items: center; gap: 10px; margin-bottom: 2px; }
+.car-badge { width: 32px; height: 32px; border-radius: 8px; background: #EEF2FF; display: flex; align-items: center; justify-content: center; }
+.car-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+.car-sub { font-size: 11px; color: var(--color-text-secondary); }
+.section-label { font-size: 10px; font-weight: 500; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 12px; margin-bottom: 6px; }
+.states-scroll { flex: 1; overflow-y: auto; padding: 8px 0; }
+.group-label { font-size: 10px; font-weight: 500; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; padding: 10px 16px 4px; }
+.state-item { display: flex; align-items: center; gap: 10px; padding: 8px 16px; cursor: pointer; transition: background 0.15s; border-left: 2px solid transparent; }
+.state-item:hover { background: var(--color-background-secondary); }
+.state-item.active { background: #EEF2FF; border-left-color: #4F46E5; }
+.state-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.state-dot.main { background: #4F46E5; }
+.state-dot.edge { background: #F59E0B; }
+.state-dot.recovery { background: #10B981; }
+.state-dot.terminal { background: #EF4444; }
+.state-name { font-size: 12px; color: var(--color-text-secondary); line-height: 1.3; }
+.state-item.active .state-name { color: #3730A3; font-weight: 500; }
+.state-num { font-size: 10px; color: var(--color-text-tertiary); margin-left: auto; flex-shrink: 0; }
+.right-panel { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.right-header { padding: 12px 20px; background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: space-between; }
+.right-header .state-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+.state-type-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+.badge-main { background: #EEF2FF; color: #3730A3; }
+.badge-edge { background: #FFFBEB; color: #92400E; }
+.badge-recovery { background: #ECFDF5; color: #065F46; }
+.badge-terminal { background: #FEF2F2; color: #991B1B; }
+.screen-area { flex: 1; overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; padding: 20px; background: var(--color-background-tertiary); }
+.phone-frame { width: 320px; background: #fff; border-radius: 36px; border: 8px solid #1a1a2e; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.15); flex-shrink: 0; }
+.phone-notch-bar { background: #4F46E5; padding: 8px 16px 0; display: flex; align-items: center; justify-content: space-between; }
+.phone-time { font-size: 11px; font-weight: 600; color: #fff; }
+.phone-icons span { font-size: 10px; color: #fff; }
+.screen-content { background: #f5f5f5; min-height: 580px; }
+.app-header { background: #4F46E5; padding: 10px 14px 12px; }
+.app-header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.back-btn { color: #fff; font-size: 18px; }
+.car-title { color: #fff; font-size: 13px; font-weight: 600; }
+.car-details { color: rgba(255,255,255,0.75); font-size: 10px; }
+.car-img-box { width: 44px; height: 28px; background: rgba(255,255,255,0.15); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+.current-status-bar { background: #4F46E5; padding: 0 14px 10px; display: flex; justify-content: space-between; align-items: center; }
+.cs-label { color: rgba(255,255,255,0.8); font-size: 10px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
+.cs-link { color: rgba(255,255,255,0.9); font-size: 10px; }
+.status-card { background: #fff; margin: 10px; border-radius: 14px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.tl-item { display: flex; align-items: flex-start; gap: 10px; position: relative; }
+.tl-item:not(:last-child)::after { content: ''; position: absolute; left: 9px; top: 20px; width: 1.5px; height: calc(100% - 4px); background: #e5e7eb; }
+.tl-item:not(:last-child).done::after { background: #4F46E5; }
+.tl-item:not(:last-child).warn::after { background: #F59E0B; }
+.tl-dot { width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #fff; font-weight: 700; z-index: 1; }
+.tl-dot.done { background: #4F46E5; }
+.tl-dot.ab { background: #4F46E5; }
+.tl-dot.ao { background: #F59E0B; }
+.tl-dot.ar { background: #EF4444; }
+.tl-dot.ag { background: #10B981; }
+.tl-dot.pending { background: #e5e7eb; }
+.tl-content { padding-bottom: 14px; flex: 1; }
+.tl-ld { font-size: 11px; color: #9ca3af; }
+.tl-la { font-size: 13px; font-weight: 600; color: #111827; }
+.tl-la.o { color: #D97706; }
+.tl-la.r { color: #DC2626; }
+.tl-la.g { color: #059669; }
+.tl-sub { font-size: 11px; color: #6b7280; margin-top: 1px; }
+.tl-lnk { font-size: 11px; color: #4F46E5; margin-top: 2px; display: block; }
+.tl-lnk.r { color: #DC2626; }
+.upsell-banner { background: #fff; margin: 0 10px 10px; border-radius: 12px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; border: 1px solid #e5e7eb; }
+.upsell-icon { width: 28px; height: 28px; background: #FFFBEB; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.upsell-text { flex: 1; }
+.upsell-title { font-size: 11px; font-weight: 600; color: #111827; }
+.upsell-sub { font-size: 10px; color: #6b7280; }
+.section { margin: 0 10px 10px; background: #fff; border-radius: 12px; padding: 12px; }
+.section-title { font-size: 12px; font-weight: 600; color: #111827; margin-bottom: 10px; }
+.expert-avatar { width: 36px; height: 36px; border-radius: 50%; background: #EEF2FF; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #4F46E5; flex-shrink: 0; }
+.call-btn { width: 100%; margin-top: 10px; background: #4F46E5; color: #fff; border: none; border-radius: 8px; padding: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.call-btn.grey { background: #e5e7eb; color: #9ca3af; }
+.detail-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: flex-start; }
+.detail-icon { width: 22px; height: 22px; background: #EEF2FF; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
+.detail-label { font-size: 10px; color: #6b7280; }
+.detail-value { font-size: 11px; color: #111827; font-weight: 500; }
+.detail-links { display: flex; gap: 8px; margin-top: 2px; }
+.detail-link { font-size: 10px; color: #4F46E5; }
+.detail-link.r { color: #DC2626; }
+.doc-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 0.5px solid #f3f4f6; }
+.doc-name { font-size: 11px; font-weight: 500; color: #111827; }
+.doc-sub { font-size: 10px; color: #6b7280; }
+.doc-status { font-size: 10px; color: #F59E0B; font-weight: 500; }
+.upload-btn { width: 52px; height: 36px; border: 1.5px dashed #d1d5db; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #9ca3af; flex-direction: column; gap: 1px; }
+.view-all-btn { width: 100%; margin-top: 8px; background: #4F46E5; color: #fff; border: none; border-radius: 8px; padding: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.sell-section { margin: 0 10px 10px; background: #fff; border-radius: 12px; overflow: hidden; }
+.sell-title { font-size: 12px; font-weight: 600; color: #111827; padding: 10px 12px 6px; }
+.plan-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; }
+.plan-row.green { background: #065F46; }
+.plan-row.purple { background: #3730A3; }
+.plan-row.light { background: #f9fafb; border-top: 0.5px solid #f3f4f6; }
+.plan-name { font-size: 11px; font-weight: 600; color: #fff; }
+.plan-name.dark { color: #111827; }
+.plan-sub { font-size: 9px; color: rgba(255,255,255,0.75); }
+.plan-sub.dark { color: #6b7280; }
+.plan-badge { width: 28px; height: 28px; background: rgba(255,255,255,0.15); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+.stars { display: flex; gap: 4px; margin: 8px 0; }
+.star { font-size: 20px; color: #F59E0B; }
+.tip-row { display: flex; gap: 6px; margin-top: 8px; }
+.tip-btn { flex: 1; border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 6px; text-align: center; font-size: 11px; font-weight: 500; color: #374151; cursor: pointer; }
+.nav-bottom { background: #fff; border-top: 0.5px solid #e5e7eb; display: flex; padding: 8px 0 4px; }
+.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
+.nav-lbl { font-size: 9px; color: #9ca3af; }
+.nav-lbl.active { color: #4F46E5; }
+.legend { display: flex; gap: 12px; padding: 10px 16px; border-top: 0.5px solid var(--color-border-tertiary); background: var(--color-background-primary); flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--color-text-secondary); }
+.legend-dot { width: 7px; height: 7px; border-radius: 50%; }
+</style>
+
+<div class="proto-wrap">
+  <div class="left-panel">
+    <div class="left-header">
+      <div class="car-info">
+        <div class="car-badge"><svg width="20" height="14" viewBox="0 0 20 14" fill="none"><path d="M3 9H17M3 9L4.5 4.5H15.5L17 9M3 9V12H5V11H15V12H17V9" stroke="#4F46E5" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="11" r="1.5" fill="#4F46E5"/><circle cx="14" cy="11" r="1.5" fill="#4F46E5"/></svg></div>
+        <div><div class="car-name">Kia Sonet</div><div class="car-sub">DL 8C BB 4290 · ₹4.50L – ₹5.62L</div></div>
+      </div>
+      <div class="section-label">All states</div>
+    </div>
+    <div class="states-scroll" id="statesList"></div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#4F46E5"></div>Main flow</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#F59E0B"></div>Edge case</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>Recovery</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#EF4444"></div>Terminal</div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="right-header">
+      <div class="state-title" id="activeTitle">Inspection booked</div>
+      <span class="state-type-badge badge-main" id="activeBadge">Main flow</span>
+    </div>
+    <div class="screen-area">
+      <div class="phone-frame">
+        <div class="phone-notch-bar">
+          <span class="phone-time">9:41</span>
+          <div class="phone-icons"><span>●●● WiFi ■</span></div>
+        </div>
+        <div class="screen-content" id="screenContent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const T = {
+  booked:'Today at 9:00 AM', assigned:'Today at 9:01 AM', upgraded:'Today at 10:00 AM',
+  onway:'Today at 10:12 AM', reached:'Today at 10:49 AM', inprog:'Today at 11:05 AM',
+  completed:'Today at 11:50 AM', cancelled:'Today at 10:51 AM',
+};
+
+const states = [
+  {id:1,  name:'Inspection booked',             type:'main',     group:'Main flow'},
+  {id:2,  name:'Car expert assigned',           type:'main',     group:'Main flow'},
+  {id:3,  name:'Car expert upgraded',           type:'main',     group:'Main flow'},
+  {id:4,  name:'Car expert on the way',         type:'main',     group:'Main flow'},
+  {id:5,  name:'Car expert reached',            type:'main',     group:'Main flow'},
+  {id:6,  name:'Inspection in progress',        type:'main',     group:'Main flow'},
+  {id:7,  name:'Inspection completed',          type:'main',     group:'Main flow'},
+  {id:8,  name:'Expert will start soon',        type:'edge',     group:'Edge cases'},
+  {id:9,  name:'Car expert running late',       type:'edge',     group:'Edge cases'},
+  {id:10, name:'Looking for another expert',    type:'edge',     group:'Edge cases'},
+  {id:11, name:'Sorry, no expert available',    type:'terminal', group:'Edge cases'},
+  {id:12, name:'Not able to contact you',       type:'terminal', group:'Edge cases'},
+  {id:13, name:'Inspection missed',             type:'terminal', group:'Edge cases'},
+  {id:14, name:'Senior expert assigned',        type:'recovery', group:'Recovery'},
+  {id:15, name:'Inspection cancelled',          type:'terminal', group:'Cancellation'},
+  {id:16, name:'Inspection cancelled (refund)', type:'terminal', group:'Cancellation'},
+  {id:17, name:'Refund completed',              type:'recovery', group:'Cancellation'},
+];
+
+const dotCls={main:'main',edge:'edge',recovery:'recovery',terminal:'terminal'};
+const bdgCls={main:'badge-main',edge:'badge-edge',recovery:'badge-recovery',terminal:'badge-terminal'};
+const bdgLbl={main:'Main flow',edge:'Edge case',recovery:'Recovery',terminal:'Terminal'};
+
+function renderList(){
+  const list=document.getElementById('statesList');
+  let lastGroup='',html='';
+  states.forEach((s,i)=>{
+    if(s.group!==lastGroup){html+=`<div class="group-label">${s.group}</div>`;lastGroup=s.group;}
+    html+=`<div class="state-item ${i===0?'active':''}" data-id="${s.id}" onclick="selectState(${s.id})">
+      <div class="state-dot ${dotCls[s.type]}"></div>
+      <div class="state-name">${s.name}</div>
+      <div class="state-num">${s.id}</div>
+    </div>`;
+  });
+  list.innerHTML=html;
+}
+
+function selectState(id){
+  document.querySelectorAll('.state-item').forEach(el=>el.classList.toggle('active',parseInt(el.dataset.id)===id));
+  const s=states.find(x=>x.id===id);
+  document.getElementById('activeTitle').textContent=s.name.charAt(0).toUpperCase()+s.name.slice(1);
+  document.getElementById('activeBadge').textContent=bdgLbl[s.type];
+  document.getElementById('activeBadge').className='state-type-badge '+bdgCls[s.type];
+  document.getElementById('screenContent').innerHTML=renderScreen(id);
+}
+
+const carSvg=`<svg width="28" height="16" viewBox="0 0 28 16" fill="none"><path d="M4 11H24M4 11L6.5 5H21.5L24 11M4 11V14H7V13H21V14H24V11" stroke="white" stroke-width="1.5" stroke-linecap="round"/><circle cx="8.5" cy="13" r="1.5" fill="white"/><circle cx="19.5" cy="13" r="1.5" fill="white"/></svg>`;
+
+function hdr(){return `<div class="app-header"><div class="app-header-top"><div style="display:flex;align-items:center;gap:8px"><span class="back-btn">←</span><div><div class="car-title">Kia Sonet</div><div class="car-details">DL 8C BB 4290 · ₹4.50L – ₹5.62L</div></div></div><div class="car-img-box">${carSvg}</div></div></div><div class="current-status-bar"><span class="cs-label">Current status</span><span class="cs-link">View details ▾</span></div>`;}
+function ups(title,sub){return `<div class="upsell-banner"><div class="upsell-icon">★</div><div class="upsell-text"><div class="upsell-title">${title}</div><div class="upsell-sub">${sub}</div></div><span style="font-size:16px;color:#9ca3af">›</span></div>`;}
+function exp(name,callActive){const ini=name.split(' ').map(n=>n[0]).join('');return `<div class="section"><div class="section-title">Meet your expert</div><div style="display:flex;align-items:center;gap:10px"><div class="expert-avatar">${ini}</div><div><div style="font-size:12px;font-weight:600;color:#111827">${name}</div><div style="font-size:10px;color:#059669">✓ Certified expert</div><div style="font-size:10px;color:#6b7280">1,000+ inspections done so far</div></div></div>${callActive?`<button class="call-btn">Call expert</button>`:`<div style="font-size:10px;color:#9ca3af;margin-top:8px;text-align:center">Call will be available 1 hour before slot</div><button class="call-btn grey">Call expert</button>`}</div>`;}
+function det(reschedule=true,bookAnother=false){const links=bookAnother?`<div class="detail-links"><span class="detail-link">Book another inspection ▶</span></div>`:reschedule?`<div class="detail-links"><span class="detail-link">Reschedule ▶</span><span class="detail-link r">Cancel ▶</span></div>`:'';return `<div class="section"><div class="section-title">Inspection details</div><div class="detail-row"><div class="detail-icon">📅</div><div><div class="detail-label">Date & Time</div><div class="detail-value">Wed, May 22 · 4PM – 5PM</div>${links}</div></div><div class="detail-row"><div class="detail-icon">📍</div><div><div class="detail-label">Inspection location</div><div class="detail-value">M3M Urbana, Sushant lok phase 1, Sector 43, Gurugram, 122002</div></div></div></div>`;}
+function docs(){return `<div class="section"><div class="section-title">Upload documents</div><div class="doc-row"><div><div class="doc-name">RC Copy</div><div class="doc-sub">Official document issued by the government</div></div><div><div class="doc-status">Pending</div><div class="upload-btn">↑<span style="font-size:8px">Upload</span></div></div></div><div class="doc-row" style="border:none"><div><div class="doc-name">Insurance</div><div class="doc-sub">Official document issued by the government</div></div><div><div class="doc-status">Pending</div><div class="upload-btn">↑<span style="font-size:8px">Upload</span></div></div></div><button class="view-all-btn">View all</button></div>`;}
+function sell(){return `<div class="sell-section"><div class="sell-title">Sell your car faster</div><div class="plan-row green"><div><div class="plan-name">Assured sell</div><div class="plan-sub">Sell your car in 30 days or pay nothing</div></div><div class="plan-badge">₹</div></div><div class="plan-row purple"><div><div class="plan-name">Max reach</div><div class="plan-sub">Reach more dealers and sell faster</div></div><div class="plan-badge">20K+</div></div><div class="plan-row light"><div style="display:flex;align-items:center;justify-content:space-between;width:100%"><div><div class="plan-name dark">Basic reach</div><div class="plan-sub dark">Get inspection report & expert help</div></div><div style="text-align:right"><div style="font-size:11px;font-weight:600;color:#111827">₹499</div><div style="font-size:9px;color:#9ca3af;text-decoration:line-through">₹999</div></div></div></div></div>`;}
+function nav(){return `<div class="nav-bottom"><div class="nav-item"><div style="font-size:16px;color:#4F46E5">⊙</div><div class="nav-lbl active">Home</div></div><div class="nav-item"><div style="font-size:16px;color:#9ca3af">☰</div><div class="nav-lbl">Orders</div></div><div class="nav-item"><div style="font-size:16px;color:#9ca3af">♡</div><div class="nav-lbl">Saved</div></div><div class="nav-item"><div style="font-size:16px;color:#9ca3af">👤</div><div class="nav-lbl">Profile</div></div></div>`;}
+
+function tli(dot,line,lCls,label,sub,link='',lnkCls=''){
+  return `<div class="tl-item ${line}"><div class="tl-dot ${dot}">${dot==='done'?'✓':''}</div><div class="tl-content"><div class="${lCls}">${label}</div><div class="tl-sub">${sub}</div>${link?`<a class="tl-lnk ${lnkCls}">${link}</a>`:''}</div></div>`;
+}
+
+function renderScreen(id){
+  switch(id){
+    case 1: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','done','tl-la','Inspection booked','An expert will be assigned soon','Know how it works ▶')}
+      ${tli('pending','','tl-ld','Car expert assigned','Arriving by 4:15 PM')}
+      ${tli('pending','','tl-ld','Car expert on the way','Yet to start')}
+    </div></div>`+ups('Upgrade to sell your car faster','Unlock price boost of up to 5%')+det()+docs()+sell()+nav();
+
+    case 2: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','done','tl-ld','Inspection booked',T.booked)}
+      ${tli('ab','done','tl-la','Car expert assigned','Rajesh will inspect your car','Know your expert ▶')}
+      ${tli('pending','','tl-ld','Car expert on the way','Yet to start')}
+    </div></div>`+ups('Upgrade to sell your car faster','Unlock price boost of up to 5%')+exp('Rajesh Kumar',false)+det()+docs()+sell()+nav();
+
+    case 3: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','done','tl-ld','Car expert assigned',T.assigned)}
+      ${tli('ab','done','tl-la','Car expert upgraded','Anshu will inspect your car','Know why ▶')}
+      ${tli('pending','','tl-ld','Car expert on the way','Yet to start')}
+    </div></div>`+ups('Upgrade to sell your car faster','Unlock price boost of up to 5%')+exp('Anshu Saini',true)+det()+docs()+sell()+nav();
+
+    case 4: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','done','tl-ld','Car expert upgraded',T.upgraded)}
+      ${tli('ab','done','tl-la','Car expert on the way','Anshu will reach in 1 hour 34 minutes','Track expert ▶')}
+      ${tli('pending','','tl-ld','Car expert reached','Expert will be at your location as per slot time')}
+    </div></div>`+ups('Upgrade to sell your car faster','Unlock price boost of up to 5%')+exp('Anshu Saini',true)+det()+docs()+sell()+nav();
+
+    case 5: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','done','tl-ld','Car expert on the way',T.onway)}
+      ${tli('ab','done','tl-la','Car expert reached','Anshu is at your location','Call expert ▶')}
+      ${tli('pending','','tl-ld','Inspection in progress','Expert will collect your car details for evaluation')}
+    </div></div>`+ups('Upgrade to sell your car faster','Unlock price boost of up to 5%')+exp('Anshu Saini',true)+det()+docs()+sell()+nav();
+
+    case 6: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','done','tl-ld','Car expert reached',T.reached)}
+      ${tli('ab','done','tl-la','Inspection in progress','Anshu is evaluating your car','Know how it works ▶')}
+      ${tli('pending','','tl-ld','Inspection completed','Expert will submit your car details')}
+    </div></div>`+ups('Upgrade to sell your car faster','Unlock price boost of up to 5%')+exp('Anshu Saini',true)+det()+docs()+sell()+nav();
+
+    case 7: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','done','tl-ld','Inspection in progress',T.inprog)}
+      ${tli('ag','done','tl-la g','Inspection completed','Anshu has submitted your car details','Next steps ▶')}
+      ${tli('pending','','tl-ld','Price received','You will get a price within 12 hours')}
+    </div></div>`+ups('Upgrade to sell your car faster','Unlock price boost of up to 5%')+
+    `<div class="section"><div class="section-title">About your expert</div><div style="display:flex;align-items:center;gap:10px"><div class="expert-avatar">AS</div><div><div style="font-size:12px;font-weight:600;color:#111827">Anshu Saini</div><div style="font-size:10px;color:#059669">✓ Certified expert</div><div style="font-size:10px;color:#6b7280">1,000+ inspections done so far</div></div></div></div>
+    <div class="section"><div class="section-title">Rate your expert</div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star" style="color:#e5e7eb">★</span></div><div style="font-size:11px;color:#6b7280;margin-top:4px">Tip your expert — they will receive 100% of the tip</div><div class="tip-row"><div class="tip-btn">₹50</div><div class="tip-btn">₹75</div><div class="tip-btn">₹100</div><div class="tip-btn">Other</div></div></div>`+docs()+sell()+nav();
+
+    case 8: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','done','tl-ld','Car expert assigned',T.assigned)}
+      ${tli('ao','done','tl-la o','Expert will start soon','Thank you for your patience','Call expert ▶')}
+      ${tli('pending','','tl-ld','Car expert on the way','Yet to start')}
+    </div></div>`+ups('Upgrade to sell your car faster','Unlock price boost of up to 5%')+exp('Anshu Saini',true)+det()+docs()+sell()+nav();
+
+    case 9: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','done','tl-ld','Car expert upgraded',T.upgraded)}
+      ${tli('ao','done','tl-la o','Car expert running late','Expert will reach in 1 hour 34 minutes','Track expert ▶')}
+      ${tli('pending','','tl-ld','Car expert reached','Expert will be at your location as per slot time')}
+    </div></div>`+ups('Upgrade to sell your car faster','Unlock price boost of up to 5%')+exp('Anshu Saini',true)+det()+docs()+sell()+nav();
+
+    case 10: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','warn','tl-ld','Car expert assigned','Rajesh is not available at this moment')}
+      ${tli('ao','warn','tl-la o','Looking for another expert','Thank you for your patience','Contact us ▶')}
+      ${tli('pending','','tl-ld','Car expert on the way','Yet to start')}
+    </div></div>`+ups('Upgrade to sell your car faster','Unlock price boost of up to 5%')+det()+docs()+sell()+nav();
+
+    case 11: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','warn','tl-ld','Car expert assigned','Rajesh is not available at this moment')}
+      ${tli('ao','warn','tl-la o','Sorry, no expert available','It seems we are not able to serve you','Reschedule ▶','')}
+      ${tli('pending','','tl-ld','Inspection rescheduled','Reschedule now to get your car inspected')}
+    </div></div>`+det()+docs()+sell()+nav();
+
+    case 12: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','warn','tl-ld','Car expert on the way',T.onway)}
+      ${tli('ao','warn','tl-la o','Not able to contact you','It seems we are not able to serve you','Reschedule ▶','')}
+      ${tli('pending','','tl-ld','Inspection rescheduled','Reschedule now to get your car inspected')}
+    </div></div>`+det()+docs()+sell()+nav();
+
+    case 13: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','warn','tl-ld','Car expert on the way',T.onway)}
+      ${tli('ar','warn','tl-la r','Inspection missed','It seems we are not able to serve you','Reschedule ▶','')}
+      ${tli('pending','','tl-ld','Inspection rescheduled','Reschedule now to get your car inspected')}
+    </div></div>`+det()+docs()+sell()+nav();
+
+    case 14: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','done','tl-ld','Inspection missed',T.onway)}
+      ${tli('ab','done','tl-la','Senior expert assigned','Anshu Saini will inspect your car','Know your expert ▶')}
+      ${tli('pending','','tl-ld','Car expert on the way','Yet to start')}
+    </div></div>`+ups('Upgrade to sell your car faster','Unlock price boost of up to 5%')+exp('Anshu Saini',true)+det()+docs()+sell()+nav();
+
+    case 15: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','done','tl-ld','Inspection in progress',T.inprog)}
+      ${tli('ar','','tl-la r','Inspection cancelled',T.cancelled,'Book another inspection ▶','r')}
+    </div></div>
+    <div class="section"><div class="section-title">Inspection details</div>
+      <div class="detail-row"><div class="detail-icon">📅</div><div><div class="detail-label">Date & Time</div><div class="detail-value">Wed, May 22 · 4PM – 5PM</div><div class="detail-links"><span class="detail-link">Book another inspection ▶</span></div></div></div>
+      <div class="detail-row"><div class="detail-icon">📍</div><div><div class="detail-label">Inspection location</div><div class="detail-value">Cars24 Hub, M3M Urbana, Sector 43, Gurugram, 122002</div></div></div>
+    </div>`+nav();
+
+    case 16: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','done','tl-ld','Car expert assigned',T.assigned)}
+      ${tli('ar','done','tl-la r','Inspection cancelled',T.cancelled,'Book another inspection ▶','r')}
+      ${tli('pending','','tl-ld','Refund completed','You will receive your refund within 7 days')}
+    </div></div>
+    <div class="section"><div class="section-title">Inspection details</div>
+      <div class="detail-row"><div class="detail-icon">📅</div><div><div class="detail-label">Date & Time</div><div class="detail-value">Wed, May 22 · 4PM – 5PM</div><div class="detail-links"><span class="detail-link">Book another inspection ▶</span></div></div></div>
+      <div class="detail-row"><div class="detail-icon">📍</div><div><div class="detail-label">Inspection location</div><div class="detail-value">Cars24 Hub, M3M Urbana, Sector 43, Gurugram, 122002</div></div></div>
+    </div>`+nav();
+
+    case 17: return hdr()+`<div class="status-card"><div class="status-timeline">
+      ${tli('done','done','tl-ld','Car expert assigned',T.assigned)}
+      ${tli('ar','done','tl-ld','Inspection cancelled',T.cancelled)}
+      ${tli('ag','','tl-la g','Refund completed','We have processed refund of ₹300','Book another inspection ▶')}
+    </div></div>
+    <div class="section"><div class="section-title">Inspection details</div>
+      <div class="detail-row"><div class="detail-icon">📅</div><div><div class="detail-label">Date & Time</div><div class="detail-value">Wed, May 22 · 4PM – 5PM</div><div class="detail-links"><span class="detail-link">Book another inspection ▶</span></div></div></div>
+      <div class="detail-row"><div class="detail-icon">📍</div><div><div class="detail-label">Inspection location</div><div class="detail-value">Cars24 Hub, M3M Urbana, Sector 43, Gurugram, 122002</div></div></div>
+    </div>`+nav();
+
+    default: return '<div style="padding:20px;color:#9ca3af;font-size:12px">Screen not available</div>';
+  }
+}
+
+renderList();
+selectState(11);
+</script>
