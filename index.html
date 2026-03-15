@@ -221,7 +221,7 @@ function renderScreen(id){
   switch(id){
     case 1: return hdr()+`<div class="status-card"><div class="status-timeline">
       ${tli('done','done','tl-la','Inspection booked','An expert will be assigned soon','Know how it works ▶')}
-      ${tli('pending','','tl-ld','Car expert assigned','Arriving by 4:15 PM')}
+      ${tli('pending','','tl-ld','Car expert assigned','Yet to assign')}
       ${tli('pending','','tl-ld','Car expert on the way','Yet to start')}
     </div></div>`+ups('Upgrade to sell your car faster','Unlock price boost of up to 5%')+det()+docs()+sell()+nav();
 
