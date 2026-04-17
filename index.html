@@ -220,6 +220,49 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;bac
 .map-call-btn{margin-left:auto;background:#4F46E5;color:#fff;border:none;border-radius:7px;padding:5px 10px;font-size:9px;font-weight:600;cursor:pointer;}
 .map-progress{height:3px;background:#e5e7eb;border-radius:2px;overflow:hidden;}
 .map-progress-fill{height:100%;background:#4F46E5;border-radius:2px;width:62%;}
+
+.arch-overlay{position:fixed;inset:0;z-index:120;background:rgba(15,23,42,.62);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:24px;}
+.arch-panel{width:min(1120px,100%);max-height:min(92vh,880px);display:grid;grid-template-columns:minmax(280px,320px) minmax(0,1fr);background:#fbfaf6;border:1px solid #d9dde7;border-radius:24px;overflow:hidden;box-shadow:0 28px 80px rgba(15,23,42,.28);}
+.arch-side{padding:28px;background:linear-gradient(160deg,#1f2a44 0%,#254270 56%,#587b76 100%);color:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:18px;}
+.arch-side::after{content:'';position:absolute;right:-70px;bottom:-70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 68%);}
+.arch-kicker{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.72);position:relative;z-index:1;}
+.arch-heading{font-size:29px;line-height:1.08;font-weight:700;max-width:10ch;position:relative;z-index:1;}
+.arch-copy{font-size:13px;line-height:1.65;color:rgba(255,255,255,.84);max-width:26ch;position:relative;z-index:1;}
+.arch-stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:auto;position:relative;z-index:1;}
+.arch-stat{padding:12px;border-radius:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.14);}
+.arch-stat-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:5px;}
+.arch-stat-val{font-size:13px;font-weight:600;line-height:1.35;color:#fff;}
+.arch-main{padding:22px 24px 24px;overflow:auto;background:linear-gradient(180deg,#fffdf8 0%,#f6f6f1 100%);}
+.arch-main::-webkit-scrollbar{width:4px;}
+.arch-main::-webkit-scrollbar-thumb{background:#d5d5d5;border-radius:999px;}
+.arch-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px;}
+.arch-title{font-size:22px;font-weight:700;color:#111827;line-height:1.15;}
+.arch-sub{font-size:12px;line-height:1.6;color:#5b6472;max-width:52ch;margin-top:6px;}
+.arch-close{padding:8px 12px;border-radius:999px;border:1px solid #d3dae5;background:#fff;color:#334155;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;flex-shrink:0;}
+.arch-close:hover{background:#f8fafc;border-color:#bcc7d6;}
+.arch-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.arch-card{padding:16px;border-radius:18px;background:#fff;border:1px solid #e6e1d7;box-shadow:0 10px 30px rgba(15,23,42,.05);min-width:0;}
+.arch-card-wide{grid-column:1/-1;}
+.arch-card-title{font-size:13px;font-weight:700;color:#111827;margin-bottom:10px;}
+.arch-note{font-size:11px;line-height:1.55;color:#5b6472;margin-bottom:10px;}
+.arch-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;}
+.arch-stage{padding:12px;border-radius:14px;background:linear-gradient(180deg,#f8fafc 0%,#f2f6fb 100%);border:1px solid #dde5ef;min-width:0;}
+.arch-stage-lbl{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#475569;margin-bottom:6px;}
+.arch-stage-title{font-size:12px;font-weight:700;color:#111827;margin-bottom:4px;}
+.arch-stage-copy{font-size:10px;line-height:1.55;color:#64748b;}
+.arch-list{display:flex;flex-direction:column;gap:10px;}
+.arch-row{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border-radius:14px;background:#f8f5ee;border:1px solid #ece6da;}
+.arch-pill{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:999px;background:#eef2ff;color:#3730A3;font-size:10px;font-weight:700;flex-shrink:0;}
+.arch-pill.warm{background:#fff3dd;color:#B45309;}
+.arch-pill.green{background:#e8f7ef;color:#047857;}
+.arch-row-body{min-width:0;}
+.arch-row-title{font-size:12px;font-weight:700;color:#111827;line-height:1.35;}
+.arch-row-copy{font-size:11px;line-height:1.55;color:#4b5563;margin-top:2px;}
+.arch-code{margin-top:0;padding:14px 16px;border-radius:16px;background:#111827;color:#e5edf9;font-size:11px;line-height:1.6;overflow:auto;font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;white-space:pre-wrap;word-break:break-word;}
+.arch-footer{margin-top:14px;padding-top:14px;border-top:1px solid #ece6da;font-size:11px;line-height:1.6;color:#5b6472;}
+.arch-inline{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;background:#ecfdf5;color:#065F46;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;}
+@media (max-width:980px){.arch-panel{grid-template-columns:1fr;max-height:calc(100vh - 36px);}.arch-side{padding:24px;}.arch-heading{max-width:none;font-size:26px;}.arch-copy{max-width:none;}.arch-grid{grid-template-columns:1fr;}.arch-flow{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:640px){.arch-overlay{padding:12px;}.arch-panel{border-radius:18px;max-height:calc(100vh - 24px);}.arch-main{padding:18px;}.arch-top{flex-direction:column;}.arch-stat-grid{grid-template-columns:1fr 1fr;}.arch-flow{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -288,7 +331,7 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;bac
       </a>
 
       <!-- Tech Architecture: 3-tier server stack -->
-      <a href="#" class="tbtn ind" id="btn-tech" target="_blank" rel="noopener noreferrer">
+      <a href="README.md" class="tbtn ind" id="btn-tech" target="_blank" rel="noopener noreferrer" onclick="showArchitecture(event)">
         <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
           <!-- top layer -->
           <rect x="1.5" y="1.5" width="10" height="2.5" rx="1" stroke="#4338CA" stroke-width="1.2"/>
@@ -641,7 +684,132 @@ window.showMap=function(stateId){
 window.hideMap=function(){
   const m=document.querySelector('.map-page');
   if(m)m.remove();
-};function docs(){return `<div class="phs"><div class="phst">Upload documents</div><div class="phocr"><div><div class="phon">RC Copy</div><div class="phos">Official govt doc</div></div><div><div class="phop">Pending</div><div class="phub">↑</div></div></div><div class="phocr" style="border:none"><div><div class="phon">Insurance</div><div class="phos">Official govt doc</div></div><div><div class="phop">Pending</div><div class="phub">↑</div></div></div><button class="phva">View all</button></div>`;}
+};
+
+const ARCHITECTURE_CODE=`{
+  "flowId": "thank-you-pages",
+  "screenId": "inspection-booked",
+  "figmaNodeId": "274:133693",
+  "design": {
+    "figmaFileKey": "sqEfkaZxH4uaQcCKlDnILM",
+    "device": "mobile",
+    "componentMap": {
+      "status-card": "Cards/Status/Primary",
+      "expert-card": "Cards/Expert/Profile",
+      "details-card": "Cards/Inspection/Details"
+    }
+  },
+  "runtime": {
+    "renderer": "thank-you-page",
+    "stateKey": "inspection_booked",
+    "timeline": ["booked", "assigned", "on_the_way"],
+    "actions": {
+      "trackExpert": {"type": "navigate", "target": "map"},
+      "cancel": {"type": "openSheet", "sheet": "cancel-inspection"}
+    }
+  }
+}`;
+
+function escHtml(str){
+  return str.replace(/[&<>]/g,ch=>({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;'
+  }[ch]));
+}
+
+window.showArchitecture=function(ev){
+  if(ev)ev.preventDefault();
+  if(document.querySelector('.arch-overlay'))return;
+  const el=document.createElement('div');
+  el.className='arch-overlay';
+  el.setAttribute('role','dialog');
+  el.setAttribute('aria-modal','true');
+  el.innerHTML=`<div class="arch-panel">
+    <aside class="arch-side">
+      <div class="arch-kicker">Prototype blueprint</div>
+      <div class="arch-heading">Turn real Figma files into working prototype flows.</div>
+      <div class="arch-copy">Treat Figma as the visual source of truth, then bind every frame to semantic components, state data, actions, and shareable previews.</div>
+      <div class="arch-stat-grid">
+        <div class="arch-stat"><div class="arch-stat-lbl">Source</div><div class="arch-stat-val">Figma frames + node ids</div></div>
+        <div class="arch-stat"><div class="arch-stat-lbl">Contract</div><div class="arch-stat-val">Screen schema + design metadata</div></div>
+        <div class="arch-stat"><div class="arch-stat-lbl">Runtime</div><div class="arch-stat-val">Reusable shells, cards, and state engines</div></div>
+        <div class="arch-stat"><div class="arch-stat-lbl">Output</div><div class="arch-stat-val">Clickable previews, specs, and share links</div></div>
+      </div>
+    </aside>
+    <section class="arch-main">
+      <div class="arch-top">
+        <div>
+          <div class="arch-inline">Recommended approach</div>
+          <div class="arch-title">Build a pipeline around this repo, not a one-off export.</div>
+          <div class="arch-sub">The current prototype already gives you the renderer pattern: a state list, a phone shell, a screen preview, and a specification rail. The missing pieces are ingestion, normalization, and publishing.</div>
+        </div>
+        <button class="arch-close" onclick="hideArchitecture()">Close</button>
+      </div>
+      <div class="arch-grid">
+        <div class="arch-card arch-card-wide">
+          <div class="arch-card-title">Platform flow</div>
+          <div class="arch-flow">
+            <div class="arch-stage"><div class="arch-stage-lbl">1</div><div class="arch-stage-title">Import</div><div class="arch-stage-copy">Pull frames, components, tokens, and exports from the Figma file API.</div></div>
+            <div class="arch-stage"><div class="arch-stage-lbl">2</div><div class="arch-stage-title">Normalize</div><div class="arch-stage-copy">Map layers into slots like status card, CTA, expert card, and timeline.</div></div>
+            <div class="arch-stage"><div class="arch-stage-lbl">3</div><div class="arch-stage-title">Compose</div><div class="arch-stage-copy">Bind each screen to state data, actions, and mock content through JSON.</div></div>
+            <div class="arch-stage"><div class="arch-stage-lbl">4</div><div class="arch-stage-title">Simulate</div><div class="arch-stage-copy">Render clickable screens with transitions, overlays, and branching flows.</div></div>
+            <div class="arch-stage"><div class="arch-stage-lbl">5</div><div class="arch-stage-title">Publish</div><div class="arch-stage-copy">Store versions, diff changes, and share URLs with product and engineering teams.</div></div>
+          </div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-title">Core modules</div>
+          <div class="arch-list">
+            <div class="arch-row"><span class="arch-pill">A</span><div class="arch-row-body"><div class="arch-row-title">Figma ingestion service</div><div class="arch-row-copy">Use the file key and node ids to sync frames, text, fills, components, and exported SVG or PNG assets.</div></div></div>
+            <div class="arch-row"><span class="arch-pill">B</span><div class="arch-row-body"><div class="arch-row-title">Screen schema registry</div><div class="arch-row-copy">Persist screen ids, design links, component maps, data bindings, and action contracts in your own model.</div></div></div>
+            <div class="arch-row"><span class="arch-pill">C</span><div class="arch-row-body"><div class="arch-row-title">Prototype renderer</div><div class="arch-row-copy">Use reusable shells and components so one renderer can power many flows, not just one static page.</div></div></div>
+            <div class="arch-row"><span class="arch-pill">D</span><div class="arch-row-body"><div class="arch-row-title">Review and publishing layer</div><div class="arch-row-copy">Attach specs, comments, and share links so prototypes become part of the delivery workflow.</div></div></div>
+          </div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-title">MVP rollout</div>
+          <div class="arch-list">
+            <div class="arch-row"><span class="arch-pill warm">1</span><div class="arch-row-body"><div class="arch-row-title">Import one Figma file family</div><div class="arch-row-copy">Start with a narrow flow like thank-you pages instead of the whole product.</div></div></div>
+            <div class="arch-row"><span class="arch-pill warm">2</span><div class="arch-row-body"><div class="arch-row-title">Map named layers to semantic slots</div><div class="arch-row-copy">Do not render raw layer trees directly; map them to components and layout regions.</div></div></div>
+            <div class="arch-row"><span class="arch-pill warm">3</span><div class="arch-row-body"><div class="arch-row-title">Move state logic into JSON or TypeScript</div><div class="arch-row-copy">Let designers swap visuals while product teams edit state machines and interactions separately.</div></div></div>
+            <div class="arch-row"><span class="arch-pill warm">4</span><div class="arch-row-body"><div class="arch-row-title">Add save, share, and review workflows</div><div class="arch-row-copy">The platform only becomes useful when teams can publish links and track iterations.</div></div></div>
+          </div>
+        </div>
+        <div class="arch-card arch-card-wide">
+          <div class="arch-card-title">Schema contract</div>
+          <div class="arch-note">Keep Figma ids for traceability, but drive runtime behavior from your own semantic schema. That is what makes the platform maintainable.</div>
+          <pre class="arch-code">${escHtml(ARCHITECTURE_CODE)}</pre>
+        </div>
+        <div class="arch-card arch-card-wide">
+          <div class="arch-card-title">How this repo should evolve</div>
+          <div class="arch-list">
+            <div class="arch-row"><span class="arch-pill green">Now</span><div class="arch-row-body"><div class="arch-row-title">index.html already proves the runtime shape</div><div class="arch-row-copy">You have a left state machine rail, a central device preview, and a right specification panel. Keep that model.</div></div></div>
+            <div class="arch-row"><span class="arch-pill green">Next</span><div class="arch-row-body"><div class="arch-row-title">Extract SD, ETL, CC, and TS into structured modules</div><div class="arch-row-copy">Those objects should become screen data, timeline data, component definitions, and state-specific content packs.</div></div></div>
+            <div class="arch-row"><span class="arch-pill green">Then</span><div class="arch-row-body"><div class="arch-row-title">Add a Figma import layer</div><div class="arch-row-copy">Store figmaFileKey, figmaNodeId, exports, and spec URLs so every prototype state stays linked to the original design.</div></div></div>
+            <div class="arch-row"><span class="arch-pill green">Later</span><div class="arch-row-body"><div class="arch-row-title">Generate screens from shared components</div><div class="arch-row-copy">Move from HTML strings to reusable renderers so one component library can support many flows and brands.</div></div></div>
+          </div>
+          <div class="arch-footer">If you want an implementation stack, a practical starting point is Figma API plus a small Node or Bun ingestion service, a SQLite or Postgres schema registry, and a React or Vite renderer for previews.</div>
+        </div>
+      </div>
+    </section>
+  </div>`;
+  el.addEventListener('click',hideArchitecture);
+  el.firstElementChild.addEventListener('click',e=>e.stopPropagation());
+  document.body.appendChild(el);
+  document.body.style.overflow='hidden';
+};
+
+window.hideArchitecture=function(){
+  const el=document.querySelector('.arch-overlay');
+  if(el)el.remove();
+  document.body.style.overflow='';
+};
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')hideArchitecture();
+});
+
+function docs(){return `<div class="phs"><div class="phst">Upload documents</div><div class="phocr"><div><div class="phon">RC Copy</div><div class="phos">Official govt doc</div></div><div><div class="phop">Pending</div><div class="phub">↑</div></div></div><div class="phocr" style="border:none"><div><div class="phon">Insurance</div><div class="phos">Official govt doc</div></div><div><div class="phop">Pending</div><div class="phub">↑</div></div></div><button class="phva">View all</button></div>`;}
 function sell(){return `<div class="phsl"><div class="phslt">Sell your car faster</div><div class="phpl g"><div><div class="phpn">Assured sell</div><div class="phps">30 days or pay nothing</div></div><div class="phpb">₹</div></div><div class="phpl p"><div><div class="phpn">Max reach</div><div class="phps">More dealers faster</div></div><div class="phpb">20K+</div></div><div class="phpl l"><div style="display:flex;align-items:center;justify-content:space-between;width:100%"><div><div class="phpn dk">Basic reach</div><div class="phps dk">Inspection report</div></div><div><div style="font-size:9px;font-weight:600;color:#111827">₹499</div><div style="font-size:7px;color:#9ca3af;text-decoration:line-through">₹999</div></div></div></div></div>`;}
 function nav(){return `<div class="phnav"><div class="phni"><div style="font-size:13px;color:#4F46E5">⊙</div><div class="phnl a">Home</div></div><div class="phni"><div style="font-size:13px;color:#9ca3af">☰</div><div class="phnl">Orders</div></div><div class="phni"><div style="font-size:13px;color:#9ca3af">♡</div><div class="phnl">Saved</div></div><div class="phni"><div style="font-size:13px;color:#9ca3af">👤</div><div class="phnl">Profile</div></div></div>`;}
 function dets(){return `<div class="phs"><div class="phst">Inspection details</div><div class="phdr"><div class="phdi">📅</div><div><div class="phdlb">Date & Time</div><div class="phdv">Wed, May 22 · 4PM–5PM</div><div class="phdlnk"><span class="phdl2">Book another inspection ▶</span></div></div></div><div class="phdr"><div class="phdi">📍</div><div><div class="phdlb">Location</div><div class="phdv">Cars24 Hub, Gurugram</div></div></div></div>`;}
